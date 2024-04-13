@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorBackgroundGame">@color/background_game_dart</item>
+        <item name="colorGame">@color/game_dart</item>
+        <item name="colorBorderGame">@color/game_border</item>
+        <item name="colorText">@color/text_light</item>
+    </style>
+</resources>
