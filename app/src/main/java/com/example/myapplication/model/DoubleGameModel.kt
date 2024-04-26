@@ -1,8 +1,14 @@
 package com.example.myapplication.model
 
-class DoubleGameModel public constructor(size: Int) : IModel {
-    private val _game1: GameModel = GameModel(size)
-    private val _game2: GameModel = GameModel(size)
+import kotlinx.serialization.Serializable
+
+@Serializable
+class DoubleGameModel public constructor(
+    private val _game1: GameModel,
+    private val _game2: GameModel
+) : IModel {
+
+    public constructor(size: Int) : this(GameModel(size), GameModel(size))
 
     public val game1: GameModel
         get() = _game1

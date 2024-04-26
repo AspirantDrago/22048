@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View.INVISIBLE
@@ -12,6 +13,8 @@ import com.example.myapplication.controls.OnSwipeTouchListener
 import com.example.myapplication.model.DoubleGameModel
 import com.example.myapplication.model.MoveType
 import com.example.myapplication.views.GameView
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gameView1: GameView
@@ -20,6 +23,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textScore: TextView
     private lateinit var textGameOver: TextView
     private lateinit var gameViewLinearLayout: LinearLayout
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editorPreferences: SharedPreferences.Editor
 
     private var areaSize = 4
 
@@ -31,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         textScore = findViewById(R.id.textScore)
         gameViewLinearLayout = findViewById(R.id.gameViewLinearLayout)
         textGameOver = findViewById(R.id.textGameOver)
+        sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
+        editorPreferences = sharedPreferences.edit()
 
         window.decorView.setOnTouchListener(object: OnSwipeTouchListener(this@MainActivity) {
             override fun onSwipeUp() {
@@ -47,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         findViewById<Button>(R.id.btnRestart).setOnClickListener() {restart()}
-        restart()
+        restart(true)
     }
 
     override fun onResume() {
@@ -60,8 +68,13 @@ class MainActivity : AppCompatActivity() {
         checkOrientation(newConfig.orientation)
     }
 
-    private fun restart() {
-        gameModel = DoubleGameModel(areaSize)
+    private fun restart(savedGame: Boolean = false) {
+        val gameJson = sharedPreferences.getString("saved_game", "") ?: ""
+        if (savedGame && gameJson.isNotEmpty()) {
+            gameModel = Json.decodeFromString<DoubleGameModel>(gameJson)
+        } else {
+            gameModel = DoubleGameModel(areaSize)
+        }
         gameView1.model = gameModel.game1
         gameView2.model = gameModel.game2
         update()
@@ -84,6 +97,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             textGameOver.visibility = VISIBLE
         }
+        editorPreferences.putString("saved_game", Json.encodeToString(gameModel))
+        editorPreferences.apply()
     }
 
     public fun moveUp() {

@@ -1,5 +1,8 @@
 package com.example.myapplication.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class InfInt {
     protected var value = 0
     protected var level = 0

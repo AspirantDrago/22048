@@ -1,13 +1,22 @@
 package com.example.myapplication.model
 
-class GameModel public constructor(size: Int) : IModel {
+import kotlinx.serialization.Serializable
+
+@Serializable
+class GameModel public constructor(
+    protected var _score: InfInt,
+    protected var _board: MutableList<MutableList<InfInt>>,
+    protected var _size: Int,
+    protected var _isGaming: Boolean,
+    protected var _lastMove: MoveType
+) : IModel {
     protected val EMPTY_CELL = InfInt()
 
-    protected var _score: InfInt = EMPTY_CELL
-    protected var _board: MutableList<MutableList<InfInt>>
-    protected var _size: Int = size
-    protected var _isGaming: Boolean = true
-    protected var _lastMove: MoveType = MoveType.NONE
+    public constructor(size: Int) : this(InfInt(), MutableList(size) {
+        MutableList(size) { InfInt() }
+    }, size, true, MoveType.NONE) {
+        addNewNumber()
+    }
 
     public override var score: InfInt
         get() = _score
@@ -18,13 +27,6 @@ class GameModel public constructor(size: Int) : IModel {
 
     public override val isGaming: Boolean
         get() = _isGaming
-
-    init {
-        _board = MutableList(size) {
-            MutableList(size) { InfInt() }
-        }
-        addNewNumber()
-    }
 
     public override fun get(row: Int, col: Int): InfInt {
         return _board[row][col]
