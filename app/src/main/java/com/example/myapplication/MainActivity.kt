@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         findViewById<Button>(R.id.btnRestart).setOnClickListener() {restart()}
-        restart(true)
+        restart(!intent.getBooleanExtra("reset", false))
     }
 
     override fun onResume() {

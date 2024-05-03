@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">22048</string>
+    <string name="menu_start">ПРОДОЛЖИТЬ</string>
+    <string name="menu_new_game">НОВАЯ ИГРА</string>
+    <string name="menu_records">РЕКОРДЫ</string>
+    <string name="menu_about">ОБ ИГРЕ</string>
+    <string name="menu_quit">ВЫЙТИ</string>
 </resources>
