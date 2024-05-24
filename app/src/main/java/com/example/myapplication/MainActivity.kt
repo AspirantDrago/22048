@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         findViewById<Button>(R.id.btnRestart).setOnClickListener() {restart()}
-        gameViewLinearLayout.addOnLayoutChangeListener() {view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> resizeGameViews()}
+        gameViewLinearLayout.addOnLayoutChangeListener() {_, _, _, _, _, _, _, _, _ -> resizeGameViews()}
         restart(!intent.getBooleanExtra("reset", false))
     }
 
@@ -96,7 +96,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resizeGameViews() {
-        val scale = resources.displayMetrics.density
         var current_width = gameViewLinearLayout.width
         var current_height = gameViewLinearLayout.height
         if (gameViewLinearLayout.orientation == LinearLayout.VERTICAL) {

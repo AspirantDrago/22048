@@ -74,7 +74,7 @@ class GameView : View {
         }
 
         paint.color = typedValueBorderColor.data
-        paint.setStrokeWidth((size * 0.05 / _model!!.size).toFloat());
+        paint.setStrokeWidth((size * 0.05 / _model!!.size).toFloat())
         for (i in 0.._model!!.size) {
             val y = i * cellSize
             canvas.drawLine(0f, y, size, y, paint)
