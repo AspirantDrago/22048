@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="gameViewSize">320dp</dimen>
+    <dimen name="gameViewSize">120dp</dimen>
+    <dimen name="gameViewMargin">20dp</dimen>
     <dimen name="gameSeparatorSize">10dp</dimen>
 </resources>

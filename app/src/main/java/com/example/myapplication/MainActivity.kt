@@ -5,16 +5,20 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.Space
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
 import com.example.myapplication.controls.OnSwipeTouchListener
 import com.example.myapplication.model.DoubleGameModel
 import com.example.myapplication.model.MoveType
 import com.example.myapplication.views.GameView
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.security.AccessController.getContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gameView1: GameView
@@ -23,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textScore: TextView
     private lateinit var textGameOver: TextView
     private lateinit var gameViewLinearLayout: LinearLayout
+    private lateinit var gameSeparator: Space
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editorPreferences: SharedPreferences.Editor
@@ -37,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         textScore = findViewById(R.id.textScore)
         gameViewLinearLayout = findViewById(R.id.gameViewLinearLayout)
         textGameOver = findViewById(R.id.textGameOver)
+        gameSeparator = findViewById(R.id.gameSeparator)
         sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
         editorPreferences = sharedPreferences.edit()
 
@@ -55,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         findViewById<Button>(R.id.btnRestart).setOnClickListener() {restart()}
+        gameViewLinearLayout.addOnLayoutChangeListener() {view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> resizeGameViews()}
         restart(!intent.getBooleanExtra("reset", false))
     }
 
@@ -88,6 +95,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun resizeGameViews() {
+        val scale = resources.displayMetrics.density
+        var current_width = gameViewLinearLayout.width
+        var current_height = gameViewLinearLayout.height
+        if (gameViewLinearLayout.orientation == LinearLayout.VERTICAL) {
+            current_height -= gameSeparator.width
+            current_height /= 2
+        } else if (gameViewLinearLayout.orientation == LinearLayout.HORIZONTAL) {
+            current_width -= gameSeparator.height
+            current_width /= 2
+        }
+        var current_size = Math.min(current_height, current_width) - 3
+        if (current_size == gameView1.layoutParams.width)
+            return
+        gameView1.layoutParams.height = current_size
+        gameView1.layoutParams.width = current_size
+        gameView2.layoutParams.height = current_size
+        gameView2.layoutParams.width = current_size
+        if (gameViewLinearLayout.orientation == LinearLayout.VERTICAL) {
+            val offset = (gameViewLinearLayout.height - current_size * 2 - gameSeparator.width) / 2
+            (gameView1.layoutParams as MarginLayoutParams).setMargins(0, offset, 0, 0)
+        } else {
+            val offset = (gameViewLinearLayout.width - current_size * 2 - gameSeparator.width) / 2
+            (gameView1.layoutParams as MarginLayoutParams).setMargins(offset, 0, 0, 0)
+        }
+        gameView1.requestLayout()
+    }
+
     public fun update() {
         textScore.setText("Счёт: ${gameModel.score}")
         gameView1.invalidate()
@@ -99,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         }
         editorPreferences.putString("saved_game", Json.encodeToString(gameModel))
         editorPreferences.apply()
+        resizeGameViews()
     }
 
     public fun moveUp() {

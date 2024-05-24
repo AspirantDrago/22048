@@ -5,15 +5,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 class GameModel public constructor(
     protected var _score: InfInt,
-    protected var _board: MutableList<MutableList<InfInt>>,
+    protected var _board: MutableList<MutableList<InfIntColored>>,
     protected var _size: Int,
     protected var _isGaming: Boolean,
     protected var _lastMove: MoveType
 ) : IModel {
-    protected val EMPTY_CELL = InfInt()
+    protected val EMPTY_CELL = InfIntColored()
 
     public constructor(size: Int) : this(InfInt(), MutableList(size) {
-        MutableList(size) { InfInt() }
+        MutableList(size) { InfIntColored() }
     }, size, true, MoveType.NONE) {
         addNewNumber()
     }
@@ -45,7 +45,7 @@ class GameModel public constructor(
             return false
         }
         val Cell = emptyCells.random()
-        _board[Cell.first][Cell.second] = InfInt(1)
+        _board[Cell.first][Cell.second] = InfIntColored(1)
         return true
     }
 

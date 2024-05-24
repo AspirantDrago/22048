@@ -10,8 +10,12 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/gameViewMargin"
+        android:layout_marginTop="@dimen/gameViewMargin"
+        android:layout_marginEnd="@dimen/gameViewMargin"
+        android:layout_marginBottom="@dimen/gameViewMargin"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,8 +34,8 @@
 
         <LinearLayout
             android:id="@+id/gameViewLinearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <com.example.myapplication.views.GameView
@@ -40,6 +44,7 @@
                 android:layout_height="@dimen/gameViewSize" />
 
             <Space
+                android:id="@+id/gameSeparator"
                 android:layout_width="@dimen/gameSeparatorSize"
                 android:layout_height="@dimen/gameSeparatorSize" />
 

@@ -10,6 +10,7 @@ import android.view.View
 import com.example.myapplication.R.attr
 import com.example.myapplication.model.GameModel
 import com.example.myapplication.model.InfInt
+import com.example.myapplication.model.InfIntColored
 import kotlin.math.min
 
 
@@ -63,6 +64,15 @@ class GameView : View {
         val textSize = 0.6f * cellSize
         paint.color = typedValueBackColor.data
         canvas.drawRect(0f, 0f, size, size, paint)
+        for (row in 0 until _model!!.size) {
+            for (col in 0 until _model!!.size) {
+                if (_model!!.get(row, col) != EMPTY_CELL) {
+                    // TODO
+                    canvas.drawRect(col * cellSize, row * cellSize, (col + 1) * cellSize, (row + 1) * cellSize, paint)
+                }
+            }
+        }
+
         paint.color = typedValueBorderColor.data
         paint.setStrokeWidth((size * 0.05 / _model!!.size).toFloat());
         for (i in 0.._model!!.size) {
