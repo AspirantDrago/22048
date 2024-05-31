@@ -5,4 +5,17 @@
     <string name="menu_records">РЕКОРДЫ</string>
     <string name="menu_about">ОБ ИГРЕ</string>
     <string name="menu_quit">ВЫЙТИ</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="tab_1_title">Правила</string>
+    <string name="tab_2_title">Контакты</string>
+    <string name="tab_3_title">Credits</string>
+    <string name="tab_1">
+        Вкладка 1
+    </string>
+    <string name="tab_2">
+        Вкладка 2
+    </string>
+    <string name="tab_3">
+        Вкладка 3
+    </string>
 </resources>

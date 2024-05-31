@@ -44,5 +44,10 @@ class MenuActivity : AppCompatActivity() {
             finish()
             System.out.close()
         }
+
+        menuAbout = findViewById(R.id.menu_about)
+        menuAbout.setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
     }
 }
